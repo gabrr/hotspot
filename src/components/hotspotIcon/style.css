@@ -1,0 +1,74 @@
+.hotspot {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+
+.red-out {
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    background-color: rgba(255, 0, 0, .5);
+    position: relative;
+}
+
+.red-in {
+    content: "";
+    width: 20px;
+    height: 20px;
+    background-color: rgba(0, 0, 0, 0);
+    border: 1px solid red;
+    border-radius: 100%;
+    position: absolute;
+    top: 50%;
+    padding: 2px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.hotspot-info {
+    background-color: #fff;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 300px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+    padding: 25px 30px 30px;
+    transform: translateX(-50%);
+    margin-top: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.hotspot-pointer {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+    top: 30px;
+    left: 0;
+    transform: rotate(50deg);
+    display: none;
+}
+
+.hotspot-info.pointer::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    top: -9px;
+    left: 50%;
+    z-index: 999;
+    transform: rotate(46deg);
+}
+
+.hotspot-info-title {
+    font-size: 130%;
+    margin-bottom: 20px;
+    color: #444;
+}
+
+.hotspot-info-body {
+    font-size: 90%;
+}

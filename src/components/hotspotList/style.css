@@ -1,0 +1,33 @@
+#hotspot-list {
+    margin: auto;
+    width: 30%;
+    max-width: 300px;
+}
+
+#hotspot-list header {
+    background-color: #ebebeb;
+    padding: 5px;
+}
+
+#hotspot-list .item {
+    margin: 10px 0;
+    height: 20px;
+    display: flex;
+    padding-bottom: 10px;
+    position: relative;
+    border-bottom: 1.5px solid rgba(0, 0, 0, .1);
+    font-size: 115%;
+}
+
+#hotspot-list .item .name {
+    position: absolute;
+    left: 5px;
+}
+
+#hotspot-list .item .delete-bt {
+    position: absolute;
+    right: 5px;
+    font-size: 80%;
+    text-decoration: underline;
+    color: #619ee5;
+}

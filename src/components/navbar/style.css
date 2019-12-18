@@ -1,6 +1,6 @@
 nav {
     width: 100%;
-    margin-top: 20px;
+    margin-top: 10px;
     display: grid;
     grid-template-columns: 30% 1fr;
     position: relative;
@@ -16,12 +16,15 @@ nav {
 
 .navbar-links li {
     font-size: 90%;
-    padding: 10px 15px;
+    padding: 5px 15px;
+    margin: 0 5px;
+    align-self: center;
 }
 
 .logo {
     margin-left: 10vw;
     position: relative;
+    height: 55px;
 }
 
 .logo img {

@@ -17,8 +17,9 @@ export class SpotItems extends Component {
         return this.key++
     }
 
-    removeSpot() {
-        store.dispatch(spotRemover(1))
+    removeSpot(event) {
+        store.dispatch(spotRemover(event.target.id - 1))
+        window.localStorage.setItem("Hotspots", JSON.stringify(store.getState().hotspotCreator.hotspots));
         ReactDOM.render(<HotspotIcon />, document.getElementById("spot-space"))
         ReactDOM.render(<SpotItems/>, document.getElementById("list-items"))
     }
@@ -31,7 +32,7 @@ export class SpotItems extends Component {
                         return (
                             <div key={`a${this.keyGentr()}`} className="item primary-text-color">
                                 <div key={`b${this.keyGentr()}`} className="name selectable-spot">#Hotspot{spot.id}</div>
-                                <div key={`c${this.keyGentr()}`} onClick={this.removeSpot} className="delete-bt clickable no-spot selectable-spot">Delete</div>
+                                <div key={`c${this.keyGentr()}`} onClick={this.removeSpot} id={store.getState().hotspotCreator.hotspots.indexOf(spot) + 1} className="delete-bt clickable no-spot selectable-spot">Delete</div>
                             </div>
                         )
                     })

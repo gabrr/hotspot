@@ -1,13 +1,7 @@
-const spotCreator = (title, body, x, y, id) => {
+const spotCreator = (hotspots) => {
     return {
         type: "CREATING_SPOT",
-        hotspots: [{
-            title,
-            body,
-            x,
-            y,
-            id
-        }]
+        hotspots: [...hotspots]
     }
 }
 

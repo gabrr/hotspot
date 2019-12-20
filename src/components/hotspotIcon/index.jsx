@@ -16,6 +16,7 @@ export default class HotspotIcon extends Component {
 
 
     render() {
+        console.log(store.getState())
         return (
             <React.Fragment>
                 {

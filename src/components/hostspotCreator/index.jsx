@@ -43,15 +43,27 @@ export default class HotspotCreator extends Component {
                 if(event.target.classList.value.indexOf("no-spot") === -1) {
                     let title = "Just a test"
                     let body = "This is a body for a test"
-                    window.localStorage.setItem(Math.random() * .3.toPrecision(5), "spot");
+                    let browserData = JSON.parse(window.localStorage.getItem("Hotspots"));      
+                    let id = browserData ? browserData.length + 1 : 1
 
-                    let id = window.localStorage.length;
-                    store.dispatch(createSpot(title, body, event.screenX, event.screenY, id))
+                    let newSpot = [
+                        {
+                            title, 
+                            body, 
+                            x: event.screenX, 
+                            y: event.screenY, 
+                            id
+                        }
+                    ]
+                    
+                    store.dispatch(createSpot(newSpot))
                     ReactDOM.render(<HotspotIcon />, document.getElementById("spot-space"))
                     ReactDOM.render(<SpotItems/>, document.getElementById("list-items"))
                 }
             }
+            window.localStorage.setItem("Hotspots", JSON.stringify(store.getState().hotspotCreator.hotspots));
         })
+
     }
 
     createSpotBt() {
@@ -82,6 +94,11 @@ export default class HotspotCreator extends Component {
     }
 
     componentDidMount() {
+        if(window.localStorage.getItem("Hotspots")) {
+            store.dispatch(createSpot(JSON.parse(window.localStorage.getItem("Hotspots"))))
+        }
+        ReactDOM.render(<HotspotIcon />, document.getElementById("spot-space"))
+        ReactDOM.render(<SpotItems/>, document.getElementById("list-items"))
     }
 
     render() {

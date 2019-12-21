@@ -3,7 +3,8 @@
     left: 50%;
     top: 50%;
     z-index: 2;
-    pointer-events: none;
+    /* pointer-events: none; */
+    transform: translate(-4%, -79%);
 }
 
 .red-out {
@@ -73,4 +74,9 @@
 
 .hotspot-info-body {
     font-size: 90%;
+}
+
+input {
+    border: none;
+    display: none;
 }

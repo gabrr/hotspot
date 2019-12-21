@@ -16,9 +16,6 @@ export default class HotspotCreator extends Component {
 
         this.createSpotBt = this.createSpotBt.bind(this)
     }
-    
-
-    
 
     inspector() {
         document.addEventListener("mouseover", (event) => {
@@ -40,13 +37,12 @@ export default class HotspotCreator extends Component {
     spotPositionSetter() {        
         document.addEventListener("click", (event) => {
             if(this.state.hotspotCreatorActive) {
-                if(event.target.classList.value.indexOf("no-spot") === -1) {
-                    let title = "Just a test"
-                    let body = "This is a body for a test"
+                if(event.target.classList.value.indexOf("no-spot") === -1 && event.target.tagName !== "INPUT") {
+                    const title = "Click twice to edit the title"
+                    const body = "Click twice to edit body text"
                     let browserData = JSON.parse(window.localStorage.getItem("Hotspots"));      
                     let id = browserData ? browserData.length + 1 : 1
-
-                    let newSpot = [
+                    const newSpot = [
                         {
                             title, 
                             body, 

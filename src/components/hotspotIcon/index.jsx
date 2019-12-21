@@ -17,12 +17,17 @@ export default class HotspotIcon extends Component {
     }
 
     showInput(event) {
-        event.target.offsetParent.querySelector("input").style.display = "block"
+        console.log(event.target)
+        event.target.nextElementSibling.style.display = "block"
         event.target.style.display = "none"
+    }
+
+
+    componentDidMount() {
+
     }
     
     updateBody(event) {
-        console.log(event)
         store.dispatch(spotUpdater(parseInt(event.target.dataset.id) - 1, "body", event.target.value))
         window.localStorage.setItem("Hotspots", JSON.stringify(store.getState().hotspotCreator.hotspots));
         event.target.offsetParent.querySelector("p").innerText = event.target.value
@@ -30,22 +35,18 @@ export default class HotspotIcon extends Component {
         event.target.style.display = "none"
     }
     updateTitle(event) {
-        console.log("title")
         store.dispatch(spotUpdater(parseInt(event.target.dataset.id) - 1, "title", event.target.value))
         window.localStorage.setItem("Hotspots", JSON.stringify(store.getState().hotspotCreator.hotspots));
         event.target.offsetParent.querySelector("h4").innerText = event.target.value
         event.target.offsetParent.querySelector("h4").style.display = "block"
         event.target.style.display = "none"
-    }
-
-    
- 
+    } 
 
     render() {
         return (
             <React.Fragment>
                 {
-                    store.getState().hotspotCreator.hotspots.map(spot => {
+                    store.getState().hotspotCreator.hotspots.map((spot, index) => {
                         return (
                             <div className="hotspot" key={`a${this.keyGentr()}`} style={{left: spot.x, top: spot.y}}>
                                 <div className="red-out" key={`b${this.keyGentr()}`}>
@@ -55,11 +56,11 @@ export default class HotspotIcon extends Component {
                                 <div className="hotspot-info no-spot pointer" key={`e${this.keyGentr()}`} >
                                     <div onDoubleClick={this.spotEditor} className="hotspot-info-title no-spot" key={`f${this.keyGentr()}`} >
                                         <h4 className="no-spot" onDoubleClick={this.showInput} key={`g${this.keyGentr()}`}>{spot.title}</h4>
-                                        <input type="text" onBlur={this.updateTitle} data-id={store.getState().hotspotCreator.hotspots.indexOf(spot) + 1} defaultValue={"Click twice to edit"} className="title-input editable-input no-spot" key={`h${this.keyGentr()}`}/>
+                                        <input type="text" onBlur={this.updateTitle} data-id={index + 1} defaultValue={"Click out the input to save"} className="title-input editable-input no-spot" key={`h${this.keyGentr()}`}/>
                                     </div>      
                                     <div onDoubleClick={this.spotEditor} className="hotspot-info-body no-spot primary-text-color" key={`i${this.keyGentr()}`}>
                                         <p className="no-spot" onDoubleClick={this.showInput} key={`j${this.keyGentr()}`}>{spot.body}</p> 
-                                        <input type="text" onBlur={this.updateBody} data-id={store.getState().hotspotCreator.hotspots.indexOf(spot) + 1} defaultValue={"Click twice to edit"} className="body-input editable-input no-spot" key={`k${this.keyGentr()}`}/>
+                                        <input type="text" onBlur={this.updateBody} data-id={index + 1} defaultValue={"Click out the input to save"} className="body-input editable-input no-spot" key={`k${this.keyGentr()}`}/>
                                     </div>
                                 </div>
                             </div>

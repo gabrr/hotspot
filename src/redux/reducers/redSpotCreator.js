@@ -11,9 +11,9 @@ const ReducerSpotCreator = (state = INITIAL_STATE, action) => {
             const newState = [...state.hotspots.slice(0, id), ...state.hotspots.slice(id + 1)]
             return { hotspots: [...newState] };
         case "UPDATING_SPOT":
-            const stateUpdated = state.hotspots[action.id][action.field] = action.value;
-            console.log(stateUpdated)
-            return state
+            const stateUpdated = state.hotspots
+            stateUpdated[action.id][action.field] = action.value;
+            return { hotspots: [...stateUpdated] }
         default:
             return state
     }

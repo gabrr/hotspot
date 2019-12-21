@@ -22,11 +22,14 @@ export default class HotspotIcon extends Component {
         event.target.style.display = "none"
     }
 
-
-    componentDidMount() {
-
+    showCard(event) {
+        console.log(document.querySelectorAll(".hotspot-indicator"))
     }
     
+    componentDidMount() {
+        this.showCard()
+    }
+
     updateBody(event) {
         store.dispatch(spotUpdater(parseInt(event.target.dataset.id) - 1, "body", event.target.value))
         window.localStorage.setItem("Hotspots", JSON.stringify(store.getState().hotspotCreator.hotspots));
@@ -49,9 +52,8 @@ export default class HotspotIcon extends Component {
                     store.getState().hotspotCreator.hotspots.map((spot, index) => {
                         return (
                             <div className="hotspot" key={`a${this.keyGentr()}`} style={{left: spot.x, top: spot.y}}>
-                                <div className="red-out" key={`b${this.keyGentr()}`}>
-                                    <div className="red-in" key={`c${this.keyGentr()}`}></div>
-                                    <div className="hotspot-pointer" key={`d${this.keyGentr()}`}></div>
+                                <div className="red-in hotspot-indicator" key={`b${this.keyGentr()}`}>
+                                    <div className="red-out" key={`c${this.keyGentr()}`}></div>
                                 </div>
                                 <div className="hotspot-info no-spot pointer" key={`e${this.keyGentr()}`} >
                                     <div onDoubleClick={this.spotEditor} className="hotspot-info-title no-spot" key={`f${this.keyGentr()}`} >

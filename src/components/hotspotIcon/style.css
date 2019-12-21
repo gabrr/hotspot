@@ -1,18 +1,46 @@
 .hotspot {
     position: absolute;
+    width: 0;
+    height: 0;
     z-index: 2;
-    transform: translate(-4%, -79%);
 }
 
-.red-out {
+@keyframes growingPointer {
+    from {
+        transform: scale(.9);
+    }
+    to {
+        transform: scale(1.1);
+    }
+}
+
+.red-in {
     width: 20px;
     height: 20px;
     border-radius: 100%;
     background-color: rgba(255, 0, 0, .5);
     position: relative;
+    left: -10px;
+    top: -10px;
+    animation: growingPointer 1000ms alternate infinite;
 }
 
-.red-in {
+@keyframes growingRing {
+    0% {
+        padding: 0;
+        opacity: 1;
+    }
+    90% {
+        padding: 3px;
+        opacity: 0;
+    }
+    100% {
+        padding: 3px;
+        opacity: 0;
+    }
+}
+
+.red-out {
     content: "";
     width: 20px;
     height: 20px;
@@ -20,16 +48,17 @@
     border: 1px solid red;
     border-radius: 100%;
     position: absolute;
+    padding: 0;
     top: 50%;
-    padding: 2px;
     left: 50%;
+    animation: growingRing ease-in-out 1000ms infinite;
     transform: translate(-50%, -50%);
 }
 
 .hotspot-info {
     background-color: #fff;
     border-radius: 10px;
-    width: 90%;
+    min-width: 250px;
     max-width: 300px;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
     padding: 25px 30px 30px;
@@ -37,18 +66,13 @@
     margin-top: 20px;
     position: relative;
     z-index: 2;
+    opacity: 0;
+    pointer-events: none;
 }
 
-.hotspot-pointer {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background-color: #fff;
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
-    top: 30px;
-    left: 0;
-    transform: rotate(50deg);
-    display: none;
+.hotspot-info.show {
+    opacity: 1;
+    pointer-events: all;
 }
 
 .hotspot-info.pointer::after {

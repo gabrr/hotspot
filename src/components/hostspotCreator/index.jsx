@@ -36,6 +36,7 @@ export default class HotspotCreator extends Component {
 
     spotPositionSetter() {        
         document.addEventListener("click", (event) => {
+            console.log(event.clientX, event.clientY)
             if(this.state.hotspotCreatorActive) {
                 if(event.target.classList.value.indexOf("no-spot") === -1 && event.target.tagName !== "INPUT") {
                     const title = "Click twice to edit the title"
@@ -46,8 +47,8 @@ export default class HotspotCreator extends Component {
                         {
                             title, 
                             body, 
-                            x: event.screenX, 
-                            y: event.screenY, 
+                            x: event.clientX, 
+                            y: event.clientY, 
                             id
                         }
                     ]

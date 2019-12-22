@@ -17,6 +17,8 @@ export default class HotspotCreator extends Component {
         this.createSpotBt = this.createSpotBt.bind(this)
     }
 
+    // this inspector will highlight elements being hovered, to make it work, the elements 
+    //must have the class "selectable-spot".
     inspector() {
         document.addEventListener("mouseover", (event) => {
             // if(this.state.hotspotCreatorActive) {
@@ -34,9 +36,11 @@ export default class HotspotCreator extends Component {
         })
     }
 
+    // To plot the hotspot indicator when user clicks. if the element has class "no-spot", it will not plot in that space.
+    // it will not plot in inputs since the class could not prevent the plotting event. updates the localstorage and re-render the 
+    // hotspots indicators and list with the new values on the store redux.
     spotPositionSetter() {        
         document.addEventListener("click", (event) => {
-            console.log(event.clientX, event.clientY)
             if(this.state.hotspotCreatorActive) {
                 if(event.target.classList.value.indexOf("no-spot") === -1 && event.target.tagName !== "INPUT") {
                     const title = "Click twice to edit the title"
@@ -71,6 +75,7 @@ export default class HotspotCreator extends Component {
 
             this.inspector()
             this.spotPositionSetter()
+            // hotspot button creator with animation when editor mode is active
             document.getElementsByClassName("hotspot-creator-bt")[0].classList.add("active")
         } 
         else {
@@ -82,6 +87,7 @@ export default class HotspotCreator extends Component {
 
     }
 
+    // change button text to match the action it will handle.
     btName() {
         if(!this.state.hotspotCreatorActive) {
             return "Create Hotspot"
@@ -90,6 +96,7 @@ export default class HotspotCreator extends Component {
         }
     }
 
+    // when the component mount, the redux store gets updated from the localstorage.
     componentDidMount() {
         if(window.localStorage.getItem("Hotspots")) {
             store.dispatch(createSpot(JSON.parse(window.localStorage.getItem("Hotspots"))))

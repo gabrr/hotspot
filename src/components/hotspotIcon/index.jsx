@@ -10,26 +10,30 @@ export default class HotspotIcon extends Component {
         this.key = 0
     
     }
-    
-
+    // key generator for the html childs below.
     keyGentr() {
         return this.key++
     }
 
+    // the card has inputs, h4 and p tags, in order to edit the text, double click, remove the p or h4, and
+    // show the input, so the can edit the header or the body text.
     showInput(event) {
-        console.log(event.target)
         event.target.nextElementSibling.style.display = "block"
         event.target.style.display = "none"
     }
 
+    // the card will show up only if the user hover the hotspot indicator.
     showCard(event) {
-        console.log(document.querySelectorAll(".hotspot-indicator"))
-    }
-    
-    componentDidMount() {
-        this.showCard()
+        event.target.offsetParent.offsetParent.querySelector(".hotspot-info").classList.add("show");
     }
 
+    // if the user leaves the card information container, then it hides itself.
+    hideCard(event) {
+        event.target.classList.remove("show")
+    }
+
+    // when the user focus out the input in the card, this code will, update the redux store, update the localstorage,
+    // update the the card's body text.
     updateBody(event) {
         store.dispatch(spotUpdater(parseInt(event.target.dataset.id) - 1, "body", event.target.value))
         window.localStorage.setItem("Hotspots", JSON.stringify(store.getState().hotspotCreator.hotspots));
@@ -37,6 +41,9 @@ export default class HotspotIcon extends Component {
         event.target.offsetParent.querySelector("p").style.display = "block"
         event.target.style.display = "none"
     }
+
+    // when the user focus out the input in the card, this code will, update the redux store, update the localstorage,
+    // update the the card's title.
     updateTitle(event) {
         store.dispatch(spotUpdater(parseInt(event.target.dataset.id) - 1, "title", event.target.value))
         window.localStorage.setItem("Hotspots", JSON.stringify(store.getState().hotspotCreator.hotspots));
@@ -52,10 +59,10 @@ export default class HotspotIcon extends Component {
                     store.getState().hotspotCreator.hotspots.map((spot, index) => {
                         return (
                             <div className="hotspot" key={`a${this.keyGentr()}`} style={{left: spot.x, top: spot.y}}>
-                                <div className="red-in hotspot-indicator" key={`b${this.keyGentr()}`}>
-                                    <div className="red-out" key={`c${this.keyGentr()}`}></div>
+                                <div className="red-in" key={`b${this.keyGentr()}`}>
+                                    <div className="red-out" onMouseOver={this.showCard} key={`c${this.keyGentr()}`}></div>
                                 </div>
-                                <div className="hotspot-info no-spot pointer" key={`e${this.keyGentr()}`} >
+                                <div className="hotspot-info no-spot pointer" onMouseLeave={this.hideCard} key={`e${this.keyGentr()}`} >
                                     <div onDoubleClick={this.spotEditor} className="hotspot-info-title no-spot" key={`f${this.keyGentr()}`} >
                                         <h4 className="no-spot" onDoubleClick={this.showInput} key={`g${this.keyGentr()}`}>{spot.title}</h4>
                                         <input type="text" onBlur={this.updateTitle} data-id={index + 1} defaultValue={"Click out the input to save"} className="title-input editable-input no-spot" key={`h${this.keyGentr()}`}/>

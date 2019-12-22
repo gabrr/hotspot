@@ -1,6 +1,7 @@
 .hotspot-creator-bt {
     margin: 20vh auto 10vh;
     width: max-content;
+    max-width: 250px;
     background-color: #0fc0c7;
     padding: 10px 20px;
     border-radius: 40px;

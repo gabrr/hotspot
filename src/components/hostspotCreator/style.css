@@ -22,7 +22,7 @@
         transform: scale(0.99);
     }
     to {
-        transform: scale(1);
+        transform: scale(1.01);
     }
 }
 
@@ -33,7 +33,7 @@
 }
 
 .hotspot-creator-bt.active {
-    animation: buttonActive2 alternate infinite 400ms ease-in-out;
+    animation: buttonActive2 alternate infinite 500ms ease-in-out;
 }
 
 

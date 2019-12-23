@@ -82,7 +82,7 @@ export default class HotspotIcon extends Component {
                         return (
                             <div className={`hotspot hotspot${index + 1}`} data-id={index + 1} key={`a${this.keyGentr()}`} style={{left: spot.x, top: spot.y}}>
                                 <div className="red-in" key={`b${this.keyGentr()}`}>
-                                    <div className="red-out" data-id={index + 1} onMouseOver={this.showCard} key={`c${this.keyGentr()}`}></div>
+                                    <div className="red-out no-spot" data-id={index + 1} onClick={this.showCard} key={`c${this.keyGentr()}`}></div>
                                 </div>
                                 <div className={`hotspot-info no-spot pointer hotspot-info${index + 1}`} data-id={index + 1} onMouseLeave={this.hideCard} key={`e${this.keyGentr()}`} >
                                     <div className={`card-pointer card-pointer${index + 1}`}></div>

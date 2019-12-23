@@ -25,7 +25,6 @@ export default class HotspotIcon extends Component {
     // the card will show up only if the user hover the hotspot indicator.
     showCard(event) {
         const safeDistance = 170
-        const cardSize = 270
         const windowWidth = window.innerWidth
         let id = event.target.dataset.id
         let spotLeftValue = document.querySelector(`.hotspot${id}`).offsetLeft

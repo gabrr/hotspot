@@ -25,20 +25,23 @@ export default class HotspotIcon extends Component {
     // the card will show up only if the user hover the hotspot indicator.
     showCard(event) {
         const safeDistance = 170
+        const cardSize = 270
         const windowWidth = window.innerWidth
-        const spotLeftValue = store.getState().hotspotCreator.hotspots[0].x
+        let id = event.target.dataset.id
+        let spotLeftValue = document.querySelector(`.hotspot${id}`).offsetLeft
         if(spotLeftValue < safeDistance) {
-            document.querySelector(".hotspot-info").style.left = `${safeDistance - spotLeftValue}px`
-        }
-        const rightDistance = windowWidth - spotLeftValue
-        if(rightDistance < safeDistance) {
-            document.querySelector(".hotspot-info").style.left = `${rightDistance - spotLeftValue}px`
+            document.querySelector(`.hotspot-info${id}`).style.left = `${safeDistance - spotLeftValue}px`
+            document.querySelector(`.card-pointer${id}`).style.left = `${spotLeftValue - 5}px`
         }
         
+        let rightDistance = windowWidth - spotLeftValue
+        console.log(rightDistance, windowWidth, spotLeftValue)
+        if(rightDistance < safeDistance) {
+            document.querySelector(`.hotspot-info${id}`).style.left = `${rightDistance - safeDistance}px`
+            document.querySelector(`.card-pointer${id}`).style.left = `calc(100% - ${rightDistance}px + 5px)`
+        }
 
-       
-
-        event.target.offsetParent.offsetParent.querySelector(".hotspot-info").classList.add("show");
+       document.querySelector(`.hotspot-info${id}`).classList.add("show");
     }
 
     // the card placement will vary if the hotspot indicator is too close to the sides.
@@ -53,20 +56,24 @@ export default class HotspotIcon extends Component {
     // when the user focus out the input in the card, this code will, update the redux store, update the localstorage,
     // update the the card's body text.
     updateBody(event) {
-        store.dispatch(spotUpdater(parseInt(event.target.dataset.id) - 1, "body", event.target.value))
-        window.localStorage.setItem("Hotspots", JSON.stringify(store.getState().hotspotCreator.hotspots));
-        event.target.offsetParent.querySelector("p").innerText = event.target.value
-        event.target.offsetParent.querySelector("p").style.display = "block"
+        const id = parseInt(event.target.dataset.id) //getting element id
+        store.dispatch(spotUpdater(id - 1, "body", event.target.value)) //updating the redux store
+        window.localStorage.setItem("Hotspots", JSON.stringify(store.getState().hotspotCreator.hotspots)) //updating the localstore
+        document.querySelector(`.hotspot${id}`).classList.add("higher-indexed") //make sure, hovered element is on top of the others
+        document.querySelector(`.card-p${id}`).innerText = event.target.value
+        document.querySelector(`.card-p${id}`).style.display = "block"
         event.target.style.display = "none"
     }
 
     // when the user focus out the input in the card, this code will, update the redux store, update the localstorage,
     // update the the card's title.
     updateTitle(event) {
-        store.dispatch(spotUpdater(parseInt(event.target.dataset.id) - 1, "title", event.target.value))
-        window.localStorage.setItem("Hotspots", JSON.stringify(store.getState().hotspotCreator.hotspots));
-        event.target.offsetParent.querySelector("h4").innerText = event.target.value
-        event.target.offsetParent.querySelector("h4").style.display = "block"
+        const id = parseInt(event.target.dataset.id) //getting element id
+        store.dispatch(spotUpdater(id - 1, "title", event.target.value)) //updating the redux store
+        window.localStorage.setItem("Hotspots", JSON.stringify(store.getState().hotspotCreator.hotspots)) //updates the localstorage
+        document.querySelector(`.hotspot${id}`).classList.remove("higher-indexed") 
+        document.querySelector(`.card-h4${id}`).innerText = event.target.value
+        document.querySelector(`.card-h4${id}`).style.display = "block"
         event.target.style.display = "none"
     } 
 
@@ -76,18 +83,19 @@ export default class HotspotIcon extends Component {
                 {
                     store.getState().hotspotCreator.hotspots.map((spot, index) => {
                         return (
-                            <div className="hotspot" key={`a${this.keyGentr()}`} style={{left: spot.x, top: spot.y}}>
+                            <div className={`hotspot hotspot${index + 1}`} data-id={index + 1} key={`a${this.keyGentr()}`} style={{left: spot.x, top: spot.y}}>
                                 <div className="red-in" key={`b${this.keyGentr()}`}>
-                                    <div className="red-out" onMouseOver={this.showCard} key={`c${this.keyGentr()}`}></div>
+                                    <div className="red-out" data-id={index + 1} onMouseOver={this.showCard} key={`c${this.keyGentr()}`}></div>
                                 </div>
-                                <div className="hotspot-info no-spot pointer" onMouseLeave={this.hideCard} key={`e${this.keyGentr()}`} >
+                                <div className={`hotspot-info no-spot pointer hotspot-info${index + 1}`} data-id={index + 1} onMouseLeave={this.hideCard} key={`e${this.keyGentr()}`} >
+                                    <div className={`card-pointer card-pointer${index + 1}`}></div>
                                     <div onDoubleClick={this.spotEditor} className="hotspot-info-title no-spot" key={`f${this.keyGentr()}`} >
-                                        <h4 className="no-spot" onDoubleClick={this.showInput} key={`g${this.keyGentr()}`}>{spot.title}</h4>
-                                        <input type="text" onBlur={this.updateTitle} data-id={index + 1} defaultValue={"Click out the input to save"} className="title-input editable-input no-spot" key={`h${this.keyGentr()}`}/>
+                                        <h4 className={`no-spot card-h4${index + 1}`} data-id={index + 1} onDoubleClick={this.showInput} key={`g${this.keyGentr()}`}>{spot.title}</h4>
+                                        <input className={`title-input editable-input no-spot" type="text card-title-input${index + 1}`} onBlur={this.updateTitle} data-id={index + 1} defaultValue={"Click out the input to save"}  key={`h${this.keyGentr()}`}/>
                                     </div>      
                                     <div onDoubleClick={this.spotEditor} className="hotspot-info-body no-spot primary-text-color" key={`i${this.keyGentr()}`}>
-                                        <p className="no-spot" onDoubleClick={this.showInput} key={`j${this.keyGentr()}`}>{spot.body}</p> 
-                                        <input type="text" onBlur={this.updateBody} data-id={index + 1} defaultValue={"Click out the input to save"} className="body-input editable-input no-spot" key={`k${this.keyGentr()}`}/>
+                                        <p className={`no-spot card-p${index + 1}`} data-id={index + 1} onDoubleClick={this.showInput} key={`j${this.keyGentr()}`}>{spot.body}</p> 
+                                        <input  className={`body-input editable-input no-spot card-body-input${index + 1}`} type="text" onBlur={this.updateBody} data-id={index + 1} defaultValue={"Click out the input to save"} key={`k${this.keyGentr()}`}/>
                                     </div>
                                 </div>
                             </div>

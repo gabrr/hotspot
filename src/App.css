@@ -1,3 +1,7 @@
+body {
+    overflow-x: hidden;
+}
+
 .App {
     max-width: 1000px;
     margin: auto;

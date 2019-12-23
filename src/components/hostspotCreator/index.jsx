@@ -47,8 +47,9 @@ export default class HotspotCreator extends Component {
                     const body = "Click twice to edit body text"
 
                     // getting data from the localstorage to set the id
-                    let browserData = JSON.parse(window.localStorage.getItem("Hotspots"));      
-                    let id = browserData ? browserData.length + 1 : 1
+                    let browserData = JSON.parse(window.localStorage.getItem("Hotspots")); 
+                    let lastSpot = browserData.pop()
+                    let id = lastSpot ? lastSpot.id + 1 : 1
                     const newSpot = [
                         {
                             title, 

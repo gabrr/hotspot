@@ -31,7 +31,7 @@ export class SpotItems extends Component {
                     store.getState().hotspotCreator.hotspots.map(spot => {
                         return (
                             <div key={`a${this.keyGentr()}`} className="item primary-text-color">
-                                <div key={`b${this.keyGentr()}`} className="name selectable-spot">#Hotspot{spot.id}</div>
+                                <div key={`b${this.keyGentr()}`} className="name selectable-spot">Hotspot #{spot.id}</div>
                                 <div key={`c${this.keyGentr()}`} onClick={this.removeSpot} id={store.getState().hotspotCreator.hotspots.indexOf(spot) + 1} className="delete-bt clickable no-spot selectable-spot">Delete</div>
                             </div>
                         )

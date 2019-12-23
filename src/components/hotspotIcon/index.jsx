@@ -19,6 +19,7 @@ export default class HotspotIcon extends Component {
     // show the input, so the can edit the header or the body text.
     showInput(event) {
         event.target.nextElementSibling.style.display = "block"
+        event.target.nextElementSibling.focus()
         event.target.style.display = "none"
     }
 

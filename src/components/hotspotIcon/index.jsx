@@ -20,6 +20,7 @@ export default class HotspotIcon extends Component {
     showInput(event) {
         event.target.nextElementSibling.style.display = "block"
         event.target.nextElementSibling.focus()
+        event.target.nextElementSibling.select()
         event.target.style.display = "none"
     }
 

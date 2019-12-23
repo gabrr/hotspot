@@ -15,24 +15,25 @@ export default class HotspotCreator extends Component {
         }
 
         this.createSpotBt = this.createSpotBt.bind(this)
+        
     }
 
     // this inspector will highlight elements being hovered, to make it work, the elements 
     //must have the class "selectable-spot".
     inspector() {
         document.addEventListener("mouseover", (event) => {
-            // if(this.state.hotspotCreatorActive) {
+            if(this.state.hotspotCreatorActive) {
                 if(event.target.classList.value.indexOf("selectable-spot") !== -1) {
                     event.target.classList.add("selected")
                 }
-            // }
+            }
         })
         document.addEventListener("mouseout", (event) => {
-            // if(this.state.hotspotCreatorActive) {
+            if(this.state.hotspotCreatorActive) {
                 if(event.target.classList.value.indexOf("selectable-spot") !== -1) {
                     event.target.classList.remove("selected")
                 }
-            // }
+            }
         })
     }
 
@@ -42,7 +43,8 @@ export default class HotspotCreator extends Component {
     spotPositionSetter() {        
         document.addEventListener("click", (event) => {
             if(this.state.hotspotCreatorActive) {
-                if(event.target.classList.value.indexOf("no-spot") === -1 && event.target.tagName !== "INPUT") {
+                const {target: obj} = event
+                if(obj.classList.value.indexOf("no-spot") === -1 && obj.tagName !== "INPUT") {
                     const title = "Click twice to edit the title"
                     const body = "Click twice to edit body text"
 
@@ -75,19 +77,14 @@ export default class HotspotCreator extends Component {
             this.setState({
                 hotspotCreatorActive: true
             })
-
-            this.inspector()
-            this.spotPositionSetter()
             // hotspot button creator with animation when editor mode is active
-            document.getElementsByClassName("hotspot-creator-bt")[0].classList.add("active")
-        } 
-        else {
-            // this.setState({
-            //     hotspotCreatorActive: false
-            // })
-            // document.getElementsByClassName("hotspot-creator-bt")[0].classList.remove("active")
+            document.querySelector(".hotspot-creator-bt").classList.add("active")
+        } else {
+            this.setState({
+                hotspotCreatorActive: false
+            })
+            document.querySelector(".hotspot-creator-bt").classList.remove("active")
         }
-
     }
 
     // change button text to match the action it will handle.
@@ -106,6 +103,8 @@ export default class HotspotCreator extends Component {
         }
         ReactDOM.render(<HotspotIcon />, document.getElementById("spot-space"))
         ReactDOM.render(<SpotItems/>, document.getElementById("list-items"))
+        this.inspector()
+        this.spotPositionSetter()
     }
 
     render() {

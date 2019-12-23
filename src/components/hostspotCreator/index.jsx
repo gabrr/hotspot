@@ -43,7 +43,8 @@ export default class HotspotCreator extends Component {
     spotPositionSetter() {        
         document.addEventListener("click", (event) => {
             if(this.state.hotspotCreatorActive) {
-                if(event.target.classList.value.indexOf("no-spot") === -1 && event.target.tagName !== "INPUT") {
+                const {target: obj} = event
+                if(obj.classList.value.indexOf("no-spot") === -1 && obj.tagName !== "INPUT") {
                     const title = "Click twice to edit the title"
                     const body = "Click twice to edit body text"
 
@@ -64,7 +65,6 @@ export default class HotspotCreator extends Component {
                     store.dispatch(createSpot(newSpot))
                     ReactDOM.render(<HotspotIcon />, document.getElementById("spot-space"))
                     ReactDOM.render(<SpotItems/>, document.getElementById("list-items"))
-                    console.log(store.getState())
                 }
             }
             window.localStorage.setItem("Hotspots", JSON.stringify(store.getState().hotspotCreator.hotspots));

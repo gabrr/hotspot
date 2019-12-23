@@ -23,6 +23,8 @@ export default class HotspotIcon extends Component {
     }
 
     // the card will show up only if the user hover the hotspot indicator.
+    // the card placement will vary if the hotspot indicator is too close to the sides.
+    // 170 the limit
     showCard(event) {
         const safeDistance = 170
         const windowWidth = window.innerWidth
@@ -34,7 +36,6 @@ export default class HotspotIcon extends Component {
         }
         
         let rightDistance = windowWidth - spotLeftValue
-        console.log(rightDistance, windowWidth, spotLeftValue)
         if(rightDistance < safeDistance) {
             document.querySelector(`.hotspot-info${id}`).style.left = `${rightDistance - safeDistance}px`
             document.querySelector(`.card-pointer${id}`).style.left = `calc(100% - ${rightDistance}px + 5px)`
@@ -42,9 +43,6 @@ export default class HotspotIcon extends Component {
 
        document.querySelector(`.hotspot-info${id}`).classList.add("show");
     }
-
-    // the card placement will vary if the hotspot indicator is too close to the sides.
-    // 170 the limit
         
 
     // if the user leaves the card information container, then it hides itself.
